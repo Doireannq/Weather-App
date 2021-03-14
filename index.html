@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+      crossorigin="anonymous"
+    />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link href="src/styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="search-bar">
+        <div class="mb-3">
+          <form id="search-form">
+            <input
+              type="text"
+              class="form-control"
+              id="city-search"
+              placeholder="City Search"
+            />
+            <div class="weather-buttons">
+              <input type="button" value="Search" id="search-weather"/>
+              <input type="button" value="Current" id="current-weather"/>
+            </div>            
+          </form>
+        </div>
+      </div>
+      <div class="temperature">
+        <div class="emoji-container">
+          <h2 id="emoji-temp" class="emoji"></h2>
+        </div>
+        <div class="time-place-container">
+          <h2 id="current-temp-number"></h2>
+          <h2 id="search-place"></h2>
+          <h2 id="current-time"></h2>
+        </div>
+        <div class="temperature-range row">
+          <p id="temp-min" class="low-temp col"></p>
+          <p id="temp-high" class="high-temp col"></p>
+        </div>
+
+        <div class="weather-description" id="weather-description">
+          <p></p>
+        </div>
+      </div>
+      <!-- <hr />
+      <div class="days">
+        <div class="container">
+          <div class="row row-cols-7">
+            <div class="col col-days">
+              <div class="day-name">M</div>
+              <div>&#127783;</div>
+              <div class="day-temp">12&deg;C/16&deg;C</div>
+            </div>
+            <div class="col col-days">
+              <div class="day-name">T</div>
+              <div>&#9728;</div>
+              <div class="day-temp">12&deg;C/16&deg;C</div>
+            </div>
+            <div class="col col-days">
+              <div class="day-name">W</div>
+              <div>&#9728;</div>
+              <div class="day-temp">12&deg;C/16&deg;C</div>
+            </div>
+            <div class="col col-days">
+              <div class="day-name">T</div>
+              <div>&#9728;</div>
+              <div class="day-temp">12&deg;C/16&deg;C</div>
+            </div>
+            <div class="col col-days">
+              <div class="day-name">F</div>
+              <div>&#9728;</div>
+              <div class="day-temp">12&deg;C/16&deg;C</div>
+            </div>
+            <div class="col col-days">
+              <div class="day-name">S</div>
+              <div>&#9728;</div>
+              <div class="day-temp">12&deg;C/16&deg;C</div>
+            </div>
+            <div class="col col-days">
+              <div class="day-name">S</div>
+              <div>&#9728;</div>
+              <div class="day-temp">12&deg;C/16&deg;C</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <script src="src/index.js"></script>
+  </body>
+</html>
