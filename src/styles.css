@@ -93,3 +93,24 @@
   font-size: 0.75rem;
   padding-top: 12px;
 }
+
+.signature {
+  /* float: left; */
+}
+
+.extra-data {
+  text-align:right;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: inline-block;
+}
+
+.active {
+  text-decoration: none;
+  color: black;
+}

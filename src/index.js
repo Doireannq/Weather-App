@@ -40,34 +40,48 @@ searchForm.addEventListener("submit", searchFunction);
 let searchButton = document.querySelector("#search-weather");
 searchButton.addEventListener("click", searchFunction);
 
+let globalTempMin = null;
+let globalTempMax = null;
+let globalTemp = null;
+let globalDesc = null;
+
 function showTemperature(response) {
   let searchPlace = document.querySelector("#search-place");
   searchPlace.innerHTML = `${response.data.name}, `;
 
-  console.log("weather", response.data.weather[0]);
-
-  // let emojiTemp = document.querySelector("#emoji-temp");
-  // emojiTemp.innerHTML = `<img src="http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png"/>`;
-
   // let weatherDescription = document.querySelector("#weather-description");
   // weatherDescription.innerHTML = response.data.weather[0].description;
 
+  console.log(response.data);
+
+  let tempLinks = document.querySelector(".temp-links");
+  tempLinks.classList.add('show');
+  
+  let wind = document.querySelector(".wind");
+  wind.innerHTML = `Wind: ${Math.round(response.data.wind.speed)}km/h`;
+
+  let precipitation = document.querySelector(".precipitation");
+  precipitation.innerHTML = `Precipitation: ${Math.round(response.data.main.humidity)}%`;
+
+  globalTempMin = Math.round(response.data.main.temp_min);
+  globalTempMax = Math.round(response.data.main.temp_max);
+  globalTemp = Math.round(response.data.main.temp);
+  globalDesc = response.data.weather[0].description;
+
   let tempMin = document.querySelector("#temp-min");
-  tempMin.innerHTML = `Min: ${Math.round(response.data.main.temp_min)}&deg;C`;
+  tempMin.innerHTML = `Min: ${globalTempMin}&deg;C`;
 
   let tempHigh = document.querySelector("#temp-high");
-  tempHigh.innerHTML = `Max: ${Math.round(response.data.main.temp_max)}&deg;C`;
+  tempHigh.innerHTML = `Max: ${globalTempMax}&deg;C`;
 
   let currentTemp = document.querySelector("#current-temp-number");
-  currentTemp.innerHTML = `${Math.round(response.data.main.temp)}&deg;C - ${response.data.weather[0].description}`;
+  currentTemp.innerHTML = `${globalTemp}&deg;C - ${globalDesc}`;
 
   let animationIcons = {
     'clear': 'sunny',
     'clouds': 'cloudy',
     'rain': 'rainy',
-    'snow': 'snowy',
-    'mist': 'foggy',
-    'fog': 'foggy'
+    'snow': 'snowy'
   }
 
   let backgroundAnimations = {
@@ -87,8 +101,13 @@ function showTemperature(response) {
   mainContainer.classList.add(backgroundAnimation);
   
   let emojiTemp = document.querySelector("#emoji-temp");
-  emojiTemp.className = 'emoji';
-  emojiTemp.classList.add(animationIcon);
+    
+  if (animationIcon) {
+    emojiTemp.className = 'emoji';
+    emojiTemp.classList.add(animationIcon);
+  } else {
+    emojiTemp.innerHTML = `<img src="http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png"/>`;
+  }
 }
 
 function currentWeatherFunction(event) {
@@ -98,8 +117,9 @@ function currentWeatherFunction(event) {
 }
 
 function errorTemperature(error) {
-  console.log(error);
-
+  let tempLinks = document.querySelector(".temp-links");
+  tempLinks.classList.add('hide');
+  
   let searchPlace = document.querySelector("#search-place");
   searchPlace.innerHTML = ``;
 
@@ -108,6 +128,12 @@ function errorTemperature(error) {
 
   let tempMin = document.querySelector("#temp-min");
   tempMin.innerHTML = ``;
+
+  let wind = document.querySelector(".wind");
+  wind.innerHTML = ``;
+
+  let precipitation = document.querySelector(".precipitation");
+  precipitation.innerHTML = ``;
 
   let tempHigh = document.querySelector("#temp-high");
   tempHigh.innerHTML = ``;
@@ -130,3 +156,41 @@ function handlePosition(position) {
 
 let currentWeatherButton = document.querySelector("#current-weather");
 currentWeatherButton.addEventListener("click", currentWeatherFunction);
+
+function inFahrenheit(event) {
+  event.preventDefault();
+
+  celsiusLink.classList.remove("active");
+  fahrenheitLink.classList.add("active");
+  
+  let tempMin = document.querySelector("#temp-min");
+  tempMin.innerHTML = `Min: ${((globalTempMin * 9) / 5 + 32)}&deg;C`;
+
+  let tempHigh = document.querySelector("#temp-high");
+  tempHigh.innerHTML = `Max: ${((globalTempMax * 9) / 5 + 32)}&deg;C`;
+
+  let currentTemp = document.querySelector("#current-temp-number");
+  currentTemp.innerHTML = `${((globalTemp * 9) / 5 + 32)}&deg;C - ${globalDesc}`;
+}
+
+function inCelsius(event) {
+  event.preventDefault();
+  celsiusLink.classList.add("active");
+  fahrenheitLink.classList.remove("active");
+  
+  let tempMin = document.querySelector("#temp-min");
+  tempMin.innerHTML = `Min: ${globalTempMin}&deg;C`;
+
+  let tempHigh = document.querySelector("#temp-high");
+  tempHigh.innerHTML = `Max: ${globalTempMax}&deg;C`;
+
+  let currentTemp = document.querySelector("#current-temp-number");
+  currentTemp.innerHTML = `${globalTemp}&deg;C - ${globalDesc}`;
+}
+
+
+let fahrenheitLink = document.querySelector("#fahrenheit");
+fahrenheitLink.addEventListener("click", inFahrenheit);
+
+let celsiusLink = document.querySelector("#celsius");
+celsiusLink.addEventListener("click", inCelsius);
